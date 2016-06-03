@@ -1,13 +1,23 @@
 <div class="col-md-6" style=" float: none; margin: 0 auto;">
   <% if @systems.count > 0 %>
-		<div class="list-group">
 			<h3>Существующие системы:</h3>
 			<%@systems.each do |s|%>
-			  <a href="/systems/<%= s.id %>" class="list-group-item" style="margin-top: 1em;" >
-			    <h4 class="list-group-item-heading"><%= s.name%></h4>
-			    <p class="list-group-item-text"><%= s.description%></p>
-			  </a>
+				<div class="panel panel-primary">
+	  				<div class="panel-heading">
+	    				<h3 class="panel-title"><%= s.name%></h3>
+	  				</div>
+	  				<div class="panel-body">
+		    			<%= s.description%>
+		    			<ul class="list-group">
+					    	<h5>Участники:</h5>
+					    	<li class="list-group-item" style="margin-top: 1em;">
+						    	<%s.users.each do |u|%>
+						    		<%=link_to u.email, user_path(u), :class => "list-group-item" %>
+						    	<%end %>
+						  	</li>
+						    <%= link_to "Подробнее", system_path(s), :class => "btn btn-info", :style => "margin-top: 1em;" , method: :get %>
+	  				</div>
+				</div>
 			<% end %>
-		</div>
 	<% end %>
 </div>

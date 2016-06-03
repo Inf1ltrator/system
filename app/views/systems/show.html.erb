@@ -18,4 +18,28 @@
 			</div>
 		<% end %>
 	</div>
+
+</div>
+<div class="col-md-6" style="align-left;">
+	<div class="well" style="background-color: white">
+		<h4>Участники:</h4>
+		<ul class="list-group">
+		<%if @users.count > 0 %>
+				<% @users.each do |user| %>
+				   <%=link_to user.email, user_path(user), :class => "list-group-item" %>
+				   <% if user_signed_in? && current_user.id != @system.uid && current_user.id == user.id %>
+				   		<%= link_to "Покинуть", leave_system_path, :class => "list-group-item list-group-item-danger", :style => "text-align: center;", method: :delete, data: {confirm: "Точно покинуть?"} %>
+				   <% end %>
+				<% end %>  
+		<% else %>
+			<h4>Участников нет</h4>
+		<% end %>
+		<% if user_signed_in? && current_user.id != @system.uid && !@users.include?(current_user) %>
+					<%= link_to "Присоеденится", add_system_path, :class => "btn btn-success", :style => "margin-top: 1em;", method: :post %>
+		<% end %>
+	</div>	
+</div>
+
+<div class="col-md-6" style="align-left;">
+	
 </div>

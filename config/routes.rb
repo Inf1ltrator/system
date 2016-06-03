@@ -8,6 +8,11 @@ Rails.application.routes.draw do
 
   resources :systems do
 
+    member do
+      post 'add'
+      delete 'leave'
+    end
+
     resources :tasks
 
   end

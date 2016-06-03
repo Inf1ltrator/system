@@ -6,11 +6,19 @@
 		<ul class="list-group">
 			<% @systems.each do |i| %>
 			  	<%if user_signed_in? && (i.uid == current_user.id) %>
-			  		<div class="alert alert-info" role="alert">
+			  		<div class="list-group-item list-group-item-info">
 					    <%= link_to i.name, system_path(i), :class => "list-group-item", method: :get %>
 				    </div>
 				<% else %>
-					<%= link_to i.name, system_path(i), :class => "list-group-item", method: :get %>
+					<%if i.users.include?(current_user) %>
+						<div class="list-group-item list-group-item-warning">
+							<%= link_to i.name, system_path(i), :class => "list-group-item", method: :get %>
+						</div>
+					<%else %>
+						<div class="list-group-item list-group-item-danger">
+							<%= link_to i.name, system_path(i), :class => "list-group-item", method: :get %>
+						</div>
+					<%end %>
 				<% end %>	
 			<% end %>
 		</ul>
@@ -20,5 +28,5 @@
 	<%if @user == current_user %>
 		<%= link_to "Создать систему", new_system_path, :class => "btn btn-default", method: :get %>
 	<% end %>
-</div>
+	</div>
 </div>

@@ -1,11 +1,11 @@
 class SystemsController < ApplicationController
 
 	#Фильтр для проверки авторизации
-	before_filter :signed_in, only:[:destroy, :edit, :update, :new, :create]
+	before_filter :signed_in, only:[:add, :leave, :destroy, :edit, :update, :new, :create]
 	#Фильтр для загрузки пользователя 
 	before_filter :load_user
 	#Фильтр для загрузки системы по id
-	before_filter :set_system, only:[:show, :destroy, :edit, :update, :create]
+	before_filter :set_system, only:[:add, :leave, :show, :destroy, :edit, :update, :create]
 	#Фильтр для проверки создателя системы
 	before_filter :check_owner, only:[:destroy, :edit, :update]
 	
@@ -38,6 +38,25 @@ class SystemsController < ApplicationController
 	def destroy
 		@system.destroy
 		redirect_to @user
+	end
+
+	def add
+		if (!@system.users.include?(@user) && (@system.uid != @user.id))
+			@system.users << @user
+			redirect_to @system
+		else
+			render_403
+   		end
+	end
+
+	
+	def leave
+		if (  @system.users.include?(@user) && @system.uid != @user.id )
+			@system.users.destroy(@user)
+			redirect_to @system
+		else
+			render_403
+		end
 	end
 
 	private
