@@ -1,0 +1,17 @@
+<div class="col-md-6" style="align-right;">
+	<div class="well" style="background-color: white">
+		<ul class="list-group">
+			<h4 style="margin-top: 1em;">Название:</h4>
+			<li class="list-group-item" style="margin-top: 1em;"><%= @task.name %></li>
+			<h4 style="margin-top: 1em;">Описание:</h4>
+			<li class="list-group-item" style="margin-top: 1em;"><%= @task.description %></li>
+		</ul>
+		<% if user_signed_in? && current_user.id == @system.uid %>
+			<div class="btn-group btn-group-justified" role="group" aria-label="..." style="margin-top: 1em;">
+				<%=link_to "Редактировать задачу", edit_system_task_path(@system,@task), :class => "btn btn-warning" %>
+			
+				<%=link_to "Удалить", system_task_path(@system,@task), :class => "btn btn-danger", method: :delete, data: {confirm: "Точно удалить?"} %>
+			</div>
+		<% end %>
+	</div>
+</div>

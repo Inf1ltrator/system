@@ -8,7 +8,6 @@ class SystemsController < ApplicationController
 	before_filter :set_system, only:[:add, :leave, :show, :destroy, :edit, :update, :create]
 	#Фильтр для проверки создателя системы
 	before_filter :check_owner, only:[:destroy, :edit, :update]
-	
 
 	def show
 		@users = @system.users
@@ -19,11 +18,15 @@ class SystemsController < ApplicationController
 	end
 
 	def create
-		@system = System.create(system_params) 
-		@system.uid = @user.id
-		@system.save
-		@user.lists.create(system: @system)
-		redirect_to @system
+		@system = System.new(system_params) 
+		if @system.save
+			@system.uid = @user.id
+			@system.save
+			@user.lists.create(system: @system)
+			redirect_to @system
+		else
+			render 'new'
+		end
 	end
 
 	def edit
@@ -31,8 +34,10 @@ class SystemsController < ApplicationController
 
 	def update
 		@system.update(system_params)
-		@system.save
-		redirect_to @system
+		if @system.save
+			redirect_to @system
+		end
+		render 'edit'
 	end 
 
 	def destroy
