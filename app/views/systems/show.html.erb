@@ -1,0 +1,21 @@
+<div class="col-md-6" style="align-right;">
+	<div class="well" style="background-color: white">
+		<ul class="list-group">
+			<h4>Владелец:</h4>
+			<li class="list-group-item" style="margin-top: 1em;"><%= User.find_by_id(@system.uid).email %></li>
+			<h4 style="margin-top: 1em;">Название:</h4>
+			<li class="list-group-item" style="margin-top: 1em;"><%= @system.name %></li>
+			<h4 style="margin-top: 1em;">Тип Системы:</h4>
+			<li class="list-group-item" style="margin-top: 1em;"><%= @system.system_type %></li>
+			<h4 style="margin-top: 1em;">Описание:</h4>
+			<li class="list-group-item" style="margin-top: 1em;"><%= @system.description %></li>
+		</ul>
+		<% if user_signed_in? && current_user.id == @system.uid %>
+			<div class="btn-group btn-group-justified" role="group" aria-label="..." style="margin-top: 1em;">
+				<%=link_to "Редактировать систему", edit_system_path(@system), :class => "btn btn-default" %>
+			
+				<%=link_to "Удалить систему", system_path(@system), :class => "btn btn-default", method: :delete, data: {confirm: "Точно удалить?"} %>
+			</div>
+		<% end %>
+	</div>
+</div>

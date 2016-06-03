@@ -1,18 +1,14 @@
 class SystemsController < ApplicationController
 
-	#Фильтр для загрузки пользователя 
-	#авторизованного пользователя
-	before_filter :load_user
 	#Фильтр для проверки авторизации
-	before_filter :signed_in, only:[:destroy,
-		,:edit,:update,:new,:create]
-	#Фильтр для проверки создателя системы
-	before_filter :check_owner, only:[:destroy,
-		,:edit,:update,:new,:create]
+	before_filter :signed_in, only:[:destroy, :edit, :update, :new, :create]
+	#Фильтр для загрузки пользователя 
+	before_filter :load_user
 	#Фильтр для загрузки системы по id
-	before_filter :set_system, only:[:show,:destroy,
-		,:edit,:update,:create]
-
+	before_filter :set_system, only:[:show, :destroy, :edit, :update, :create]
+	#Фильтр для проверки создателя системы
+	before_filter :check_owner, only:[:destroy, :edit, :update]
+	
 
 	def show
 		@users = @system.users
@@ -23,9 +19,10 @@ class SystemsController < ApplicationController
 	end
 
 	def create
-		@system.create(system_params)
-		@system.user_id = @user.id
+		@system = System.create(system_params) 
+		@system.uid = @user.id
 		@system.save
+		@user.lists.create(system: @system)
 		redirect_to @system
 	end
 
@@ -46,7 +43,7 @@ class SystemsController < ApplicationController
 	private
 
 	def system_params
-		params.require(:system).permit(:name,:description,:tag)
+		params.require(:system).permit(:name,:description,:tag,:system_type)
 	end
 
 	def set_system
@@ -54,7 +51,7 @@ class SystemsController < ApplicationController
 	end
 
 	def check_owner
-		render_403 unless @system.user_id == current_user.id 
+		render_403 unless @system.uid == current_user.id 
 	end
 
 end

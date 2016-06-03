@@ -1,0 +1,24 @@
+<div style="text-align: center">
+	<h1><%= @user.email %></h1>
+	<div class="col-md-6" style=" float: none; margin: 0 auto;">
+	<% if @user.systems.count > 0 %>
+		<h4 style="margin-top: 1em; text-align: left">Системы:</h4>
+		<ul class="list-group">
+			<% @systems.each do |i| %>
+			  	<%if user_signed_in? && (i.uid == current_user.id) %>
+			  		<div class="alert alert-info" role="alert">
+					    <%= link_to i.name, system_path(i), :class => "list-group-item", method: :get %>
+				    </div>
+				<% else %>
+					<%= link_to i.name, system_path(i), :class => "list-group-item", method: :get %>
+				<% end %>	
+			<% end %>
+		</ul>
+	<% else %>
+		<h4>Нет систем</h4>
+	<% end %>
+	<%if @user == current_user %>
+		<%= link_to "Создать систему", new_system_path, :class => "btn btn-default", method: :get %>
+	<% end %>
+</div>
+</div>

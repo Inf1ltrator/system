@@ -1,0 +1,5 @@
+<div>
+	<%= simple_form_for @system, :html => {:multipart => true} do |f| %>
+	      <%= render partial: "eform", locals: {f: f}%>
+	<%end%>
+</div>

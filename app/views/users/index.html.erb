@@ -1,0 +1,14 @@
+<div class="col-md-6" style=" float: none; margin: 0 auto;">
+	<ul class="list-group">
+	  <% @users.each do |i| %>
+	    <li class="list-group-item">
+	    	<%= i.email %>
+	    	<div class="btn-group btn-group-justified" role="group" aria-label="...">
+				<div class="btn-group" role="group">
+				    <%= link_to "Профиль", user_path(i), :class => "btn btn-default" %>
+				</div>
+			</div>
+	    </li>
+	  <% end %>
+	</ul>
+</div>

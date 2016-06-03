@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160602204216) do
+ActiveRecord::Schema.define(version: 20160603142128) do
 
   create_table "lists", force: :cascade do |t|
     t.integer  "system_id"
@@ -26,7 +26,8 @@ ActiveRecord::Schema.define(version: 20160602204216) do
     t.string   "tag"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
-    t.integer  "user_id"
+    t.integer  "uid"
+    t.string   "system_type"
   end
 
   add_index "systems", ["tag"], name: "index_systems_on_tag", unique: true

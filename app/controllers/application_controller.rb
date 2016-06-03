@@ -8,7 +8,7 @@ class ApplicationController < ActionController::Base
   end
 
   def load_user
-		@user = current_user
+	@user = current_user
   end
 
   def signed_in
